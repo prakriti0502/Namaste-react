@@ -55,3 +55,8 @@
 .cuisines {
     overflow-wrap: anywhere;
 }
+
+.filter-btn {
+    margin: 10px;
+    cursor: pointer;
+}
