@@ -16,11 +16,7 @@ const Body = () => {
         setRestaurants(json?.data?.cards[2]?.data?.data?.cards);
     }
 
-    if(restaurants.length === 0) {
-        return <Shimmer/>
-    }
-
-    return (
+    return restaurants.length === 0 ? <Shimmer/> : (
         <div className="body">
             <div className="filter">
                 <button className="filter-btn" onClick={()=>
