@@ -4,7 +4,10 @@ import Shimmer from "./Shimmer";
 
 const Body = () => {
     const [restaurants, setRestaurants] = useState([]);
+    const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+    const [searchText, setSearchText] = useState("");
 
+    console.log("rendered");
     useEffect(()=>fetchData(), []);
 
     const fetchData = async () => {
@@ -12,13 +15,20 @@ const Body = () => {
             "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9720888&lng=77.694364&page_type=DESKTOP_WEB_LISTING"
         );
         const json = await data.json();
-        console.log(json);
         setRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+        setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
     }
 
     return restaurants.length === 0 ? <Shimmer/> : (
         <div className="body">
             <div className="filter">
+                <div className="search">
+                    <input type="text" className="search-box" value={searchText} onChange={(e)=>setSearchText(e.target.value)}/>
+                    <button className="search-btn" onClick={()=>{
+                        const filteredRestaurant = restaurants.filter((res)=>res?.data?.name?.toLowerCase()?.includes(searchText.toLowerCase()));
+                        setFilteredRestaurants(filteredRestaurant);
+                    }}>Search</button>
+                </div>
                 <button className="filter-btn" onClick={()=>
                 {
                     setRestaurants(restaurants.filter(res=>res.data.avgRating>4));
@@ -26,7 +36,7 @@ const Body = () => {
                 }}>Top Rated Restaurants</button>
             </div>
             <div className="restaurant-container">
-                {restaurants.map(res => (
+                {filteredRestaurants.map(res => (
                     <RestaurantCard key={res.data.id} resData={res}/>
                 ))}
             </div>

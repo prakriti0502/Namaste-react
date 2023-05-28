@@ -32,7 +32,7 @@
     margin: 5px;
     padding: 5px;
     width: 200px;
-    height: 329px;
+    height: 350spx;
 }
 
 .res-card:hover {
@@ -78,4 +78,12 @@
     padding: 0px 20px;
     cursor: pointer;
     height: 35px;
+}
+
+.search-btn {
+    margin-left: 10px;
+}
+
+.filter {
+    display: flex;
 }
