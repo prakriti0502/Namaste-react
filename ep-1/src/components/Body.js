@@ -7,10 +7,8 @@ const Body = () => {
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
     const [searchText, setSearchText] = useState("");
 
-    console.log("rendered");
-    useEffect(()=>fetchData(), []);
-
-    const fetchData = async () => {
+    useEffect(()=> { 
+        async function fetchData() {
         const data = await fetch(
             "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9720888&lng=77.694364&page_type=DESKTOP_WEB_LISTING"
         );
@@ -18,6 +16,8 @@ const Body = () => {
         setRestaurants(json?.data?.cards[2]?.data?.data?.cards);
         setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
     }
+        fetchData();
+    }, []);
 
     return restaurants.length === 0 ? <Shimmer/> : (
         <div className="body">
@@ -31,8 +31,7 @@ const Body = () => {
                 </div>
                 <button className="filter-btn" onClick={()=>
                 {
-                    setRestaurants(restaurants.filter(res=>res.data.avgRating>4));
-                    console.log(restaurants);
+                    setFilteredRestaurants(restaurants.filter(res=>res.data.avgRating>4));
                 }}>Top Rated Restaurants</button>
             </div>
             <div className="restaurant-container">
