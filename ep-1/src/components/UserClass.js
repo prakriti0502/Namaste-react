@@ -1,10 +1,11 @@
 import React from "react";
+import ClassComp from "./ClassComp";
 
 class UserClass extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log("Child constructor");
+        console.log("Child constructor for ", this.props.name);
         this.state = {
             //this contains all the state variables of component
             count:0,
@@ -13,12 +14,12 @@ class UserClass extends React.Component {
     }
 
     componentDidMount() {
-        console.log("Child mounted");
+        console.log("Child mounted for ", this.props.name);
     }
 
     render() {
-        console.log("Child render")
         const {name, location} = this.props;
+        console.log("Child render for ", name);
         const {count} = this.state;
         return (
             <div className="user-card">
@@ -34,6 +35,8 @@ class UserClass extends React.Component {
                 <h2>Name: {name}</h2>
                 <h3>Location: {location}</h3>
                 <h4>Contact: @pakkusakku</h4>
+
+                <ClassComp name={name}/>
             </div>
         );
     }

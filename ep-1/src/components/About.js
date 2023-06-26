@@ -28,7 +28,8 @@ class About extends React.Component {
             <div>
                 <h1>About</h1>
                 <h2>This is Namaste React Web Series</h2>
-                <UserClass name={"Praks (class)"} location={"Blr class"}/>
+                <UserClass name={"Praks (class 1)"} location={"Blr class"}/>
+                <UserClass name={"Praks (class 2)"} location={"Blr class 2"}/>
             </div>
         );
     }
