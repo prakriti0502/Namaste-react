@@ -4,7 +4,7 @@ class UserClass extends React.Component {
 
     constructor(props) {
         super(props);
-        // console.log(props);
+        console.log("Child constructor");
         this.state = {
             //this contains all the state variables of component
             count:0,
@@ -12,7 +12,12 @@ class UserClass extends React.Component {
         };
     }
 
+    componentDidMount() {
+        console.log("Child mounted");
+    }
+
     render() {
+        console.log("Child render")
         const {name, location} = this.props;
         const {count} = this.state;
         return (
