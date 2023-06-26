@@ -1,42 +1,37 @@
 import React from "react";
-import ClassComp from "./ClassComp";
 
 class UserClass extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log("Child constructor for ", this.props.name);
         this.state = {
-            //this contains all the state variables of component
-            count:0,
-            count2:2
+            userInfo: {
+                name: "Dummy",
+                location: "Default",
+                avatar_url: "http://dummyphoto.com",
+            }
         };
     }
 
-    componentDidMount() {
-        console.log("Child mounted for ", this.props.name);
+    async componentDidMount() {
+        const data = await fetch("https://api.github.com/users/prakriti0502");
+        const json = await data.json();
+
+        console.log(json);
+        this.setState({
+            userInfo: json,
+        })
     }
 
     render() {
-        const {name, location} = this.props;
-        console.log("Child render for ", name);
-        const {count} = this.state;
+        const {name, location, avatar_url} = this.state.userInfo;
         return (
             <div className="user-card">
-                <h1>Count: {count}</h1>
-                <button onClick={()=>{
-                    //don't do this
-                    // this.state.count=this.state.count+1;
-                    //correct method is:
-                    this.setState({
-                        count: this.state.count+1,
-                    });
-                }}>Increment</button>
+                <img src={avatar_url}/>
                 <h2>Name: {name}</h2>
                 <h3>Location: {location}</h3>
                 <h4>Contact: @pakkusakku</h4>
 
-                <ClassComp name={name}/>
             </div>
         );
     }

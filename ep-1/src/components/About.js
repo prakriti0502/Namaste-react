@@ -15,21 +15,17 @@ import React from "react";
 class About extends React.Component {
     constructor(props) {
         super(props);
-        console.log("Parent Constructor");
     }
 
     componentDidMount() {
-        console.log("Parent mounted");
     }
 
     render() {
-        console.log("Parent render");
         return (
             <div>
                 <h1>About</h1>
                 <h2>This is Namaste React Web Series</h2>
                 <UserClass name={"Praks (class 1)"} location={"Blr class"}/>
-                <UserClass name={"Praks (class 2)"} location={"Blr class 2"}/>
             </div>
         );
     }
