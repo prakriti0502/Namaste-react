@@ -27,6 +27,11 @@ const Header = () => {
                             Contact Us
                         </Link>
                     </li>
+                    <li>
+                        <Link to="/grocery">
+                            Grocery
+                        </Link>
+                    </li>
                     <li className="cart-logo">
                         <img className="cart" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxczGFQQ8WprnBfU08MtAqACtO85YPFBC7kQ&usqp=CAU"/>
                     </li>
