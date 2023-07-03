@@ -2,27 +2,22 @@ import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useRestaurants from "../utils/useRestaurants";
+import useOnlineSatus from "../utils/useOnlineStatus";
 
 const Body = () => {
-    const [restaurants, setRestaurants] = useState([]);
-    const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+    const restaurants = useRestaurants();
+    console.log(restaurants);
     const [searchText, setSearchText] = useState("");
+    const [filteredRestaurants, setFilteredRestaurants] = useState(restaurants);
 
-    useEffect(()=> { 
-        async function fetchData() {
-            try {
-                const data = await fetch(
-                    "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9720888&lng=77.694364&page_type=DESKTOP_WEB_LISTING"
-                );
-                const json = await data.json();
-                setRestaurants(json?.data?.cards[2]?.data?.data?.cards);
-                setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
-            } catch(error) {
-                console.log(error);
-            }
-    }
-        fetchData();
-    }, []);
+    useEffect(()=>{
+        setFilteredRestaurants(restaurants);
+    },[restaurants]);
+
+    const onlineStatus = useOnlineSatus();
+
+    if(!onlineStatus) return <h1>Looks like you're not connected to the internet</h1>
 
     return restaurants.length === 0 ? <Shimmer/> : (
         <div className="body">
