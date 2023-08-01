@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, {withHighRatingLabel} from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -10,14 +10,15 @@ const Body = () => {
     const [searchText, setSearchText] = useState("");
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 
+    const RestaurantCardHighRated = withHighRatingLabel(RestaurantCard);
+
     useEffect(()=> { 
         async function fetchData() {
             try {
                 const data = await fetch(RES_API);
                 const json = await data.json();
-                console.log(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-                setRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-                setFilteredRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                setRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                setFilteredRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
             } catch(error) {
                 console.log(error);
             }
@@ -43,7 +44,7 @@ const Body = () => {
                 </div>
                 <div className="m-4 p-4 flex items-center">
                     <button className="px-4 py-1 bg-gray-100 rounded-lg" onClick={()=>{
-                        setFilteredRestaurants(restaurants.filter(res=>res.data.avgRating>4));
+                        setFilteredRestaurants(restaurants.filter(res=>res.info.avgRating>4));
                     }}>
                         Top Rated Restaurants
                     </button>
@@ -52,7 +53,10 @@ const Body = () => {
             <div className="flex flex-wrap">
                 {filteredRestaurants.map(res => (
                     <Link className="restaurant-card" to={"/restaurant/"+res.info.id} key={res.info.id}>
-                        <RestaurantCard resData={res}/>
+                        {res.info.avgRating>=4 ? 
+                        (<RestaurantCardHighRated resData={res}/>) : (<RestaurantCard resData={res}/>)
+                        }
+                        
                     </Link>
                 ))}
             </div>
