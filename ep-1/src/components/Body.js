@@ -1,9 +1,10 @@
 import RestaurantCard, {withHighRatingLabel} from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineSatus from "../utils/useOnlineStatus";
 import { RES_API } from "../utils/constants";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
     const [restaurants, setRestaurants] = useState([]);
@@ -32,6 +33,8 @@ const Body = () => {
 
     if(!restaurants) return null;
 
+    const {loggedInUser, setUserName} = useContext(UserContext);
+
     return restaurants?.length === 0 ? <Shimmer/> : (
         <div className="body">
             <div className="flex justify-between">
@@ -41,6 +44,10 @@ const Body = () => {
                         const filteredRestaurant = restaurants.filter((res)=>res?.info?.name?.toLowerCase()?.includes(searchText.toLowerCase()));
                         setFilteredRestaurants(filteredRestaurant);
                     }}>Search</button>
+                </div>
+                <div className="m-4">
+                    <input className="p-2 border border-black" value={loggedInUser} 
+                    onChange={(e)=>setUserName(e.target.value)}/>
                 </div>
                 <div className="m-4 p-4 flex items-center">
                     <button className="px-4 py-1 bg-gray-100 rounded-lg" onClick={()=>{
