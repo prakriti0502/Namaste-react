@@ -8,6 +8,8 @@ import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import UserContext from "./utils/UserContext";
+import {Provider} from "react-redux";
+import appStore from "./utils/appStore";
 // import Grocery from "./components/Grocery";
 
 // lazy loading / on-demand loading / code splitting / dynamic bundling / chunking
@@ -23,13 +25,15 @@ const AppLayout = () => {
         setUserName(data.name);
     },[]);
     return (
-        <UserContext.Provider value={{loggedInUser:userName, setUserName}}>
-        <div className="app">
-            <Header/>
-            <Outlet/>
-            {/* Outlet will be filled with children depending on what path we are */}
-        </div>
-        </UserContext.Provider>
+        <Provider store={appStore}>
+            <UserContext.Provider value={{loggedInUser:userName, setUserName}}>
+            <div className="app">
+                <Header/>
+                <Outlet/>
+                {/* Outlet will be filled with children depending on what path we are */}
+            </div>
+            </UserContext.Provider>
+        </Provider>
     )
 }
 
