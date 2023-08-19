@@ -10,6 +10,7 @@ import RestaurantMenu from "./components/RestaurantMenu";
 import UserContext from "./utils/UserContext";
 import {Provider} from "react-redux";
 import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
 // import Grocery from "./components/Grocery";
 
 // lazy loading / on-demand loading / code splitting / dynamic bundling / chunking
@@ -63,6 +64,10 @@ const appRouter = createBrowserRouter([
                 element: <Suspense fallback={<h2>Loading...</h2>}>
                     <Grocery/>
                 </Suspense>
+            },
+            {
+                path: '/cart',
+                element: <Cart/>
             }
         ],
         errorElement: <Error/>
